@@ -20,11 +20,6 @@ MacOS X. StarSpan's core program is run from the command line. An
 experimental Java-based graphical user interface (GUI) is also
 available.
 
-Installing StarSpan
---------------------
-
-StarSpan requires the GDAL and GEOS libraries properly installed on 
-your system. For more details, see INSTALL.
 
 Installing StarSpan on Ubuntu 10.04
 ------------------------------------
@@ -40,6 +35,11 @@ Basically, we try and keep this fork building clean against Ubuntu 10.04
     make
     sudo make install
 
+Installing StarSpan on other systems
+------------------------------------
+
+StarSpan requires the GDAL and GEOS libraries properly installed on 
+your system. For more details, see INSTALL.
 
 Status and documentation 
 -------------------------
