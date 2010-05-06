@@ -1,4 +1,5 @@
-h1. StarSpan
+StarSpan
+=========
 
 StarSpan is designed to bridge the raster and vector worlds of spatial
 analysis using fast algorithms for pixel level extraction from
@@ -19,26 +20,29 @@ MacOS X. StarSpan's core program is run from the command line. An
 experimental Java-based graphical user interface (GUI) is also
 available.
 
-h2. Installing StarSpan
+Installing StarSpan
+--------------------
 
 StarSpan requires the GDAL and GEOS libraries properly installed on 
 your system. For more details, see INSTALL.
 
-h2. Installing StarSpan on Ubuntu 10.04
+Installing StarSpan on Ubuntu 10.04
+------------------------------------
 
 Basically, we try and keep this fork building clean against Ubuntu 10.04
 
-sudo apt-get update
-sudo apt-get -y install build-essential wget ssl-cert git-core libgeos-3.1.0 libgeos-dev libgdal1-1.6.0 libgdal1-dev
-cd /tmp
-git clone git@github.com:tokumine/Starspan.git
-cd Starspan
-./configure
-make
-sudo make install
+    sudo apt-get update
+    sudo apt-get -y install build-essential wget ssl-cert git-core     libgeos-3.1.0 libgeos-dev libgdal1-1.6.0 libgdal1-dev
+    cd /tmp
+    git clone git@github.com:tokumine/Starspan.git
+    cd Starspan
+    ./configure
+    make
+    sudo make install
 
 
-h2. Status and documentation 
+Status and documentation 
+-------------------------
 
 This is an open source software project and you are welcome to use the
 tool and contribute to this ongoing project. Please read the copyright
