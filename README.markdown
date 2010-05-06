@@ -28,7 +28,7 @@ This fork builds clean against Ubuntu 10.04.
 We have built StarSpan using the EC2 AMI: ami-714ba518.
 
     sudo apt-get update
-    sudo apt-get -y install build-essential wget ssl-cert git-core     libgeos-3.1.0 libgeos-dev libgdal1-1.6.0 libgdal1-dev
+    sudo apt-get -y install build-essential wget ssl-cert git-core libgeos-3.1.0 libgeos-dev libgdal1-1.6.0 libgdal1-dev
     cd /tmp
     git clone git@github.com:tokumine/Starspan.git
     cd Starspan
