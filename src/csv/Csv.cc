@@ -5,6 +5,7 @@
 // $Id: Csv.cc,v 1.1 2005-02-19 21:03:46 crueda Exp $
 
 #include "Csv.h"
+#include <cstdio>
 
 // endofline: check for and consume \r, \n, \r\n, or EOF
 bool Csv::endofline(char c)

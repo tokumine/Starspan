@@ -11,6 +11,7 @@
 #include <cstdio>
 #include <cstdlib>  // atof
 #include <cmath>  // sqrt
+#include <algorithm>
 
 
 void Stats::compute(vector<int>& values, int nodata) {
