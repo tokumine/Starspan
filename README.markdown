@@ -30,7 +30,7 @@ We have built StarSpan using the EC2 AMI: ami-714ba518.
     sudo apt-get update
     sudo apt-get -y install build-essential wget libgeos-3.1.0 libgeos-dev libgdal1-1.6.0 libgdal1-dev
     cd /tmp
-    wget http://github.com/tokumine/Starspan/tarball/master
+    wget http://github.com/tokumine/Starspan/tarball/1.0.08g
     tar zxvf tokumine-Starspan-*
     cd tokumine-Starspan-*
     ./configure
