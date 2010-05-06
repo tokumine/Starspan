@@ -1,0 +1,450 @@
+<?xml version="1.0"?>
+<!-- $Id: starspan.guie,v 1.15 2008-02-06 02:19:07 crueda Exp $ -->
+<guie>
+
+<gui>
+    <frame title="StarSpan" splash="splash.png" x="250" y="50"/>
+    <panel axis="vertical"/>
+    <real width="6"/>
+    <integer width="6"/>
+    <file width="80"/>
+</gui>
+
+<cldef>
+    <sequence name="StarSpan" prefix="starspan">
+        <gui panel.axis="tabbed"/>
+        <choice numsel="+" name="Inputs">
+            <file id="V" prefix="--vector" name="Vector file">
+                <gui tip.text="Specify the input vector file" description="Vector files">
+                    <button name="View" action="view" tip.text="View general info about the file">
+                        <view contents="`starspan --vector ${V} --report`" rows="40" cols="80"/>
+                    </button>
+                </gui>
+            </file>
+            <file id="R" prefix="--raster" name="Raster files">
+                <gui height="8" multi="true" description="Raster files">
+                    <tip text="@">
+                        <html>
+                        <p>Specify the input raster files. You can select multiple files.</p>
+                        <p>For some commands, you can specify the name of the attribute in the</p>
+                        <p>vector datasource that gives the name of the raster to be processed.</p>
+                        <p>In that case, use @ to indicate that attribute name, e.g., @imagename.</p>
+                        </html>
+                    </tip>
+                    <button name="View" action="view"  tip.text="View general info about the file">
+                        <view contents="`starspan --raster ${R} --report`" rows="40" cols="80"/>
+                    </button>
+                </gui>
+            </file>
+            <file id="M" prefix="--mask" name="Mask files">
+                <gui height="8" multi="true" description="Mask files">
+                    <tip text="@">
+                        <html>
+                        <p>Specify the mask files for the rasters. You can select multiple files,</p>
+                        <p>corresponding to the raster files in the field above.</p>
+                        </html>
+                    </tip>
+                    <button name="View" action="view"  tip.text="View general info about the file">
+                        <view contents="`starspan --raster ${M} --report`" rows="20" cols="60"/>
+                    </button>
+                </gui>
+            </file>
+            <file prefix="--raster-directory" name="Raster directory">
+                <gui selmode="directories-only" description="Directories" tip.text="@">
+                    <html>
+                    <p>Directory in which to find the raster files whose names are given</p>
+                    <p>by a vector attribute specified by the indicator @ in the "Raster files" field.</p>
+                    </html>
+                </gui>
+            </file>
+            <file prefix="--speclib" name="spectral library">
+                <gui description="CSV files" ext=".csv" tip.text="@">
+                    <html>
+                    <p>Specify the spectral library for calibration (CSV format)</p>
+                    </html>
+                </gui>
+            </file>
+            <file prefix="--update-csv">
+                <gui description="CSV files" ext=".csv" tip.text="@">
+                    <html>
+                    <p> Pixel locations in CSV format</p>
+                    </html>
+                </gui>
+            </file>
+        </choice>
+        
+        
+        <choice numsel="*" name="Options">
+
+            <string prefix="--duplicate_pixel" name="Duplicate pixel modes">
+                <gui width="40" multi="true">
+                    <tip text="@">
+                        <html>
+                        <p>Specify the desired modes for choosing a raster when the feature is contained</p>
+                        <p>by multiple rasters.</p>
+                        <ul>
+                            <li>distance</li>
+                            <li>direction <i>angle</i></li>
+                        </ul>
+                        </html>
+                    </tip>
+                </gui>
+            </string>
+            <sequence prefix="--buffer">
+                <gui panel.border="Buffer" panel.axis="horizontal" tip.text="@">
+                    <html>
+                    This option allows to specify a buffer
+                    <br>operation. The buffer is applied to each feature</br>
+                    <br>before computing the intersection with the raster image.</br>
+                    <br>The distance is given in the units associated to</br>
+                    <br>the geometry feature (not pixels).</br>
+                    <br></br>
+                    <br>If given, quadrantSegments is the number of</br>
+                    <br>segments used to approximate a 90 degree</br>
+                    <br>(quadrant) of curvature. By default, 1.</br>
+                    <br></br>
+                    <br>Each buffer parameter (distance,</br>
+                    <br>quadrantSegments) can be specified as</br>
+                    <br>@field, where field is the field name</br>
+                    <br>in the vector data from which the corresponding</br>
+                    <br>value is to be obtained. For example:</br>
+                    <br>--buffer @distance </br>
+                    <br>The buffer distance will be read from</br>
+                    <br>the attribute 'distance'</br> 
+                    </html>
+                </gui>
+                <real name="Distance">
+                    <gui tip.text="@">
+                        <html>
+                        The distance is given in the units associated to
+                        <br>the geometry feature (not pixels).</br>
+                        </html>
+                    </gui>
+                </real>
+                <integer name="Quadrants" min="1">
+                    <gui tip.text="@">
+                        <html>
+                        If given, quadrantSegments is the number of
+                        <br>segments used to approximate a 90 degree</br>
+                        <br>(quadrant) of curvature. By default, 1.</br>
+                        </html>
+                    </gui>
+                </integer>
+            </sequence>
+            <real prefix="--pixprop" name="Pixel proportion" min="0" max="1">
+                <gui panel.axis="horizontal" value="0.5" tip.text="@">
+                    <html>
+                    <p>Minimum proportion of pixel area in intersection so that the pixel is included.</p>
+                    <p>A value in [0.0, 1.0] must be given.</p>
+                    <p>Only used in intersections resulting in polygons. By default, the pixel proportion is 0.5.</p>
+                    </html>
+                </gui>
+            </real>
+            <string prefix="--fid" name="Desired FID">
+                <gui width="5" tip.text="@">
+                    <html>
+                    <p>Only the specified FID will be processed.</p>
+                    </html>
+                </gui>
+            </string>
+            <string prefix="--fields" name="Desired fields">
+                <gui width="30" multi="true">
+                    <tip text="@">
+                        <html>
+                        <p>Only the specified fields will be transferred from vector input to the output.</p>
+                        <p>Use spaces to separate the field names. If the vector file has already been</p>
+                        <p>given, you can click on the button to select from a list of the existing fields.</p>
+                        <p>If no field from the vector metadata is desired, write a - in this field.</p>
+                        <p>By default, all fields will be extracted.</p>
+                        </html>
+                    </tip>
+                    <button name="Select" action="select" tip.text="Select fields from vector file">
+                        <select multi="yes" list="`starspan --vector ${V} --show-fields`" separator="\n"/>
+                    </button>
+                </gui>
+            </string>
+            <choice prefix="--RID" name="Use as RID">
+                <gui tip.text="@">
+                    <html>
+                    <p>Certain output commands (--csv, --calbase) include a field RID to</p>
+                    <p>identify the raster file from which pixel data are extracted. By</p>
+                    <p>default, each RID is just the raster filename without any path. With</p>
+                    <p>this option you can specify how to include this info in the output</p>
+                    </html>
+                </gui>
+                <literal prefix="file"/>
+                <literal prefix="path"/>
+                <literal prefix="none"/>
+            </choice>
+            <real prefix="--progress" name="Progress" min="1e-6">
+                <gui width="5" value="10" tip.text="@">
+                    <html>
+                    <p>Show a progress indicator in increments of the given amount of percentage</p> 
+                    <p>(by default 10%).  This is based on the total number of geometry features</p>
+                    <p>in input vector datasource, which StarSpan can obtain in advance from some</p>
+                    <p>vector formats (e.g. shapefiles). Otherwise, a simple counting will be shown</p>
+                    <p>(in multiples of the given amount).</p>
+                    </html>
+                </gui>
+            </real>
+            <literal prefix="--skip_invalid_polys" name="Skip invalid polygons">
+                <gui tip.text="@">
+                    <html>
+                    <p>StarSpan will check each polygon for validity before rasterization.</p> 
+                    <p>If the polygon is invalid (according to a function provided by GEOS),</p>
+                    <p>then the polygon will be skipped. By default, all polygons are considered</p> 
+                    <p>for rasterization. Under some circunstances, the determination of</p> 
+                    <p>intersected pixels may fail because of self intersecting polygons.</p>
+                    </html>
+                </gui>
+            </literal>
+            <literal prefix="--noColRow" name="Don't include fields col and row">
+                <gui tip.text="@">
+                    <html>
+                    <p>By default, the <b>col</b> and <b>row</b> columns are included.</p>
+                    </html>
+                </gui>
+            </literal>
+            <literal prefix="--noXY" name="Don't include fields x and y">
+                <gui tip.text="@">
+                    <html>
+                    <p>By default, the <b>x</b> and <b>y</b> columns are included.</p>
+                    </html>
+                </gui>
+            </literal>
+            <literal prefix="--verbose" name="Verbose">
+                <gui tip.text="@">
+                    <html>
+                    <p>Check this to show more information as the process is being performed.</p>
+                    </html>
+                </gui>
+            </literal>
+        </choice>
+        
+        
+
+        <sequence name="Commands">
+            <gui panel.axis="tabbed"/>
+
+            <choice numsel="*" name="CSV">
+                <gui tip.text="CSV output commands"/>
+                <file prefix="--csv" name="File">
+                    <gui panel.border="Extract into CSV" description="CSV file" ext=".csv" tip.text="@">
+                        <html>
+                        <p>Merge of attribute and pixel values in CSV format</p>
+                        </html>
+                    </gui>
+                </file>
+                <file prefix="--update-csv" name="Existing file">
+                    <gui panel.border="Update CSV" description="CSV file" ext=".csv" tip.text="@">
+                        <html>
+                        <p>Updates an existent CSV into a new file with band values</p>
+                        <p>from the given rasters in new columns.</p>
+                        <p>Note that --vector specification is not necessary as pixel</p>
+                        <p>locations are read from the existent CSV, which.</p>
+                        <p>should be given via the --csv command.</p>
+                        </html>
+                    </gui>
+                </file>
+            </choice>
+            <choice numsel="*" name="ENVI">
+                <gui tip.text="ENVI output commands"/>
+                <sequence prefix="--envi">
+                    <gui panel.border="Generate ENVI image" tip.text="@">
+                        <html>
+                            ENVI image generation
+                        </html>
+                    </gui>
+                    <file name="Prefix">
+                        <gui description="Prefix for ENVI output files" tip.text="@">
+                            <html>
+                                Prefix for names of files .img and .hdr to be created
+                            </html>
+                        </gui>
+                    </file>
+                </sequence>
+                <sequence prefix="--envisl">
+                    <gui panel.border="Generate ENVI spectral library" tip.text="@">
+                        <html>
+                            ENVI spectral library generation
+                        </html>
+                    </gui>
+                    <file name="Prefix">
+                        <gui description="Prefix for ENVI output files" tip.text="@">
+                            <html>
+                                Prefix for names of files .img and .hdr to be created
+                            </html>
+                        </gui>
+                    </file>
+                </sequence>
+            </choice>
+            <choice numsel="*"  name="Stats">
+                <sequence prefix="--stats">
+                    <gui panel.border="Stats" tip.text="@">
+                        <html>
+                            Stats generation
+                        </html>
+                    </gui>
+                    <file name="File">
+                        <gui description="CSV file" ext=".csv" tip.text="@">
+                            <html>
+                            Specify the output <b>csv</b> file to be created
+                            </html>
+                        </gui>
+                    </file>
+                    <choice numsel="+" name="desired-stats" preselect="avg">
+                        <gui panel.axis="horizontal" tip.text="@">
+                            <html>
+                            Specify the stats you want to compute
+                            </html>
+                        </gui>
+                        <literal prefix="avg"/>
+                        <literal prefix="mode"/>
+                        <literal prefix="stdev"/>
+                        <literal prefix="min"/>
+                        <literal prefix="max"/>
+                    </choice>
+                </sequence>
+                <file prefix="--count-by-class" name="Output file:">
+                    <gui panel.border="Count by class" description="CSV file" ext=".csv"  tip.text="@">
+                        <html>
+                        count-by-class generation
+                        </html>
+                    </gui>
+                </file>
+            </choice>
+            
+            
+            <choice numsel="*"  name="Miniraster">
+                <sequence>
+                    <gui panel.border="Extract minirasters" tip.text="@">
+                        <html>
+                        <p>Generates a mini raster for each intersecting feature.</p>
+                        <p>A mini-raster is obtained by subsetting the given raster</p>
+                        <p>R according to envelope E of the geometry feature in V.</p>
+                        </html>
+                    </gui>
+                    <file prefix="--mini_rasters" name="Prefix">
+                        <gui description="Prefix for output files" tip.text="@">
+                            <html>
+                            <p>Prefix for names of resulting files .img and .hdr to be created</p>
+                            </html>
+                        </gui>
+                    </file>
+                </sequence>
+                <sequence id="mini_raster_strip">
+                    <gui panel.border="Miniraster strip" tip.text="@">
+                        <html>
+                        <p>Generates a miniraster strip of intersecting features</p>
+                        </html>
+                    </gui>
+                    <file prefix="--mini_raster_strip" name="Prefix">
+                        <gui description="Prefix for output files" tip.text="@">
+                            <html>
+                            <p>Prefix for names of resulting files _mr.img, _mrid.img, _mrloc.glt,</p>
+                            <p>and corresponding headers .hdr to be created.</p> 
+                            </html>
+                        </gui>
+                    </file>
+                    <choice numsel="*">
+                        <integer prefix="--separation">
+                            <gui tip.text="@">
+                                <html>
+                                <p>Mini rasters will be separated vertically by the given number of pixels</p>
+                                </html>
+                            </gui>
+                        </integer>
+                    </choice>
+                </sequence>
+                <literal prefix="--in" name="Nullify pixels not contained in geometry feature">
+                    <gui tip.text="@">
+                        <html>
+                        <p>pixels not contained in the geometry feature are nullified in the resulting mini raster</p>
+                        </html>
+                    </gui>
+                </literal>
+                <string prefix="--mini_raster_parity" name="Miniraster parity">
+                    <gui width="10" tip.text="@">
+                        <html>
+                        <p>Use one of <b>even</b>, <b>odd</b>, or @<i>field</i>.</p>
+                        </html>
+                    </gui>
+                </string>
+            </choice>
+            
+
+            <choice numsel="*"  name="Calibration">
+                <sequence prefix="--calbase">
+                    <gui panel.border="Generate calbase" tip.text="@">
+                        <html>
+                        <p>Calbase generation</p>
+                        </html>
+                    </gui>
+                    <file name="File">
+                        <gui description="CSV file" ext=".csv" tip.text="@">
+                            <html>
+                            <p>Specify the output <b>csv</b> file to be created containing</p>
+                            <p>paired field-image values for each band in the rasters.</p>
+                            </html>
+                        </gui>
+                    </file>
+                    <choice numsel="*" name="cal-desired-stats">
+                        <gui panel.axis="horizontal" panel.border="Desired stats" tip.text="@">
+                            <html>
+                            Specify the stats you want to compute
+                            </html>
+                        </gui>
+                        <literal prefix="avg"/>
+                        <literal prefix="mode"/>
+                        <literal prefix="stdev"/>
+                        <literal prefix="min"/>
+                        <literal prefix="max"/>
+                    </choice>
+                </sequence>
+            </choice>
+            <choice numsel="*"  name="Misc">
+                <literal prefix="--report">
+                    <gui tip.text="@">
+                        <html>
+                        Basic report about vector and raster inputs
+                        </html>
+                    </gui>
+                </literal>
+            </choice>
+        </sequence>
+        
+        <!-- An informative group -->
+        <sequence  name="Help" info="yes">
+            <gui panel.axis="tabbed"/>
+            <sequence name="StarSpan">
+                <gui panel.border="starspan --help" tip.text="Help message given by starspan"/>
+                <string >
+                    <gui height="22" width="90" value="`starspan --help`"/>
+                </string>
+            </sequence>
+            <sequence name="Raster formats">
+                <gui panel.border="Supported raster formats" tip.text="Supported raster formats"/>
+                <string >
+                    <gui height="22" width="90" value="`starspan --run gdalinfo --formats`"/>
+                </string>
+            </sequence>
+            <sequence name="Vector formats">
+                <gui panel.border="Supported vector formats" tip.text="Supported vector formats"/>
+                <string >
+                    <gui height="22" width="90" value="`starspan --run ogrinfo --formats`"/>
+                </string>
+            </sequence>
+            <sequence name="GUI">
+                <gui tip.text="About this GUI"/>
+                <string>
+                    <gui height="22" width="90" value="@aboutGuiE"/>
+                </string>
+            </sequence>
+        </sequence>
+    
+    </sequence>
+    
+    
+</cldef>
+
+</guie>
