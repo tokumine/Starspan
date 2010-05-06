@@ -30,7 +30,7 @@ We have built StarSpan using the EC2 AMI: ami-714ba518.
     sudo apt-get update
     sudo apt-get -y install build-essential wget libgeos-3.1.0 libgeos-dev libgdal1-1.6.0 libgdal1-dev
     cd /tmp
-		wget http://github.com/tokumine/Starspan/tarball/master
+    wget http://github.com/tokumine/Starspan/tarball/master
     tar zxvf tokumine-Starspan-*
     cd tokumine-Starspan-*
     ./configure
@@ -55,5 +55,4 @@ The main website is located at: http://starspan.casil.ucdavis.edu/
 
 
 --------------------------------------------------------
-$Id: README,v 1.5 2005-06-19 01:02:37 crueda Exp $
 
